@@ -45,7 +45,7 @@ public class App {
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
             for (String path : paths) {
                 File f = new File(path);
-                builder.addPart(f.getName(), new FileBody(f));
+                builder.addPart("result_files[" + f.getName() + "]", new FileBody(f));
             }
             httpPost.setEntity(builder.build());
             CloseableHttpResponse response = httpClient.execute(httpPost);
