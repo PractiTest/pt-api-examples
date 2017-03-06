@@ -1,4 +1,6 @@
-GET https://api.practitest.com/api/v2/projects.json?api_token=xx&developer_email=admin%40pt.com&page[number]=1&page[size]=2
+//curl -H "Content-Type: application/json" \
+//     -u my@email.address:xxx  \
+//    https://api.practitest.com/api/v2/projects.json
 
 // https://msdn.microsoft.com/en-us/library/system.net.httpwebrequest.getresponse%28v=vs.110%29.aspx
 string token = "xxx";

@@ -1,4 +1,6 @@
-GET https://api.practitest.com/api/v2/projects.json?api_token=xx&developer_email=admin%40pt.com&page[number]=1&page[size]=2
+#curl -H "Content-Type: application/json" \
+# -u my@mail.address:xxx  \
+# https://api.practitest.com/api/v2/projects.json
 
 require 'net/http'
 require 'net/https'
