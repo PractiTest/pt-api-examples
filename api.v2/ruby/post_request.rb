@@ -1,22 +1,32 @@
+# curl -H "Content-Type:application/json" \
+# -u test@pt.com:xxx \
+# -X POST https://api.practitest.com/api/v2/projects/4566/instances.json \
+# -d '{"data": { "type": "instances", "attributes": {"test-id": 233, "set-id": 33, "priority": "2-high" } }}'
+
+
 require 'net/http'
 require 'net/https'
 require 'uri'
 require 'json'
 
-URL   = "https://api.practitest.com"
+BASE_URL   = "https://api.practitest.com/api/v2"
 TOKEN = "xxx"
-DEVELOPER_EMAIL= "my@mail.address"
+DEVELOPER_EMAIL= "test@pt.com"
 
-
-json_results = {
-    "type": "instances"
-    "attributes": {"test-id": 233, "set-id": 33, "priority": "highest", "custom-fields": { "---f-22": "Windows", "---f-24": ["ClientA", "ClientB"]}}
-    }.to_json
-
-uri = URI.parse("#{URL}/api/v2/projects/4566/instances.json")
-http = Net::HTTP.new(uri.host, uri.port)
+instances_uri = URI.parse("#{BASE_URL}/projects/4566/instances.json")
+http = Net::HTTP.new(instances_uri.host, instances_uri.port)
 http.use_ssl = true
 
-req = Net::HTTP::Post.new(uri.path)
-req.body = json_results
-res = http.request(req)
+req = Net::HTTP::Post.new(instances_uri.path, 'Content-Type' => 'application/json')
+req.basic_auth DEVELOPER_EMAIL, TOKEN
+req.body = { data:
+  {
+    type: "instances",
+    attributes: {"test-id" => 233, "set-id" => 33, priority: "2-high"}
+  }
+}.to_json
+
+resp = http.request(req)
+
+puts resp
+puts resp.body

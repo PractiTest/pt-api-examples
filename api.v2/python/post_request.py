@@ -1,13 +1,16 @@
+# curl -H "Content-Type:application/json" \
+# -u YOUR_EMAIL:YOUR_TOKEN \
+# -X POST https://api.practitest.com/api/v2/projects/4566/instances.json \
+# -d '{"data": { "type": "instances", "attributes": {"test-id": 233, "set-id": 33, "priority": "2-high" } }}'
+
 import requests
+import json
 
-headers = {
-    'Authorization': 'YOUR_EMAIL:YOUR_TOKEN',
-    'Content-Type': 'application/json',
-}
+data_json = json.dumps({'data': {'type': 'instances', 'attributes': {'test-id': 233, 'set-id': 33, 'priority': '2-high'}}})
 
-data = '{"type": "instances", "attributes": {"test-id": 233, "set-id": 33, "priority": "highest", "custom-fields": { "---f-22": "Windows", "---f-24": ["ClientA", "ClientB"]}} }'
-
-
-r = requests.post("https://api.practitest.com/api/v2/projects/YOUR_PROJECT_ID/instances.json", headers=headers, data=data)
+r = requests.post("https://api.practitest.com/api/v2/projects/4566/instances.json",
+    data=data_json,
+    auth=('YOUR_EMAIL', 'YOUR_TOKEN'),
+    headers={'Content-type': 'application/json'})
 print r.status_code
 print r.text
