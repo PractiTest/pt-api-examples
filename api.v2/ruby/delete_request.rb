@@ -7,11 +7,11 @@ require 'net/https'
 require 'uri'
 require 'json'
 
-BASE_URL   = "https://stage.practitest.com/api/v2"
-TOKEN = "xxx"
-DEVELOPER_EMAIL= "test@pt.com"
+BASE_URL   = "https://api.practitest.com/api/v2"
+TOKEN = "YOUR_TOKEN"
+DEVELOPER_EMAIL= "YOUR_EMAIL"
 
-uri = URI.parse("#{BASE_URL}/projects/4566/instances/98020.json")
+uri = URI.parse("#{BASE_URL}/projects/4566/instances/45893.json")
 http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
 req = Net::HTTP::Delete.new(uri.path)
