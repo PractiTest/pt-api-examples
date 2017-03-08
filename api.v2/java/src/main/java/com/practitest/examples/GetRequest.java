@@ -18,7 +18,7 @@ public class GetRequest {
   private static final String API_TOKEN = "XXX";
 
     public static void main(String[] args) {
-      System.out.println("------------");
+      System.out.println("BLAH------------");
       // CredentialsProvider provider = new BasicCredentialsProvider();
       // UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(DEVELOPER_EMAIL, API_TOKEN);
       // provider.setCredentials(AuthScope.ANY, credentials);
