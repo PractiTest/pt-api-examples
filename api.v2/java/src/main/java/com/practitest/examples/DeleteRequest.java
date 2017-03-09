@@ -1,7 +1,7 @@
 package com.practitest.examples;
 
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpEntity;
@@ -12,8 +12,8 @@ import org.apache.commons.codec.binary.Base64;
 /**
  * This example demonstrates how to call practiTest API V2 with basic auth (Get request)
  */
-public class GetWithResponse {
-    private static final String URI = "https://api.practitest.com/api/v2/projects.json";
+public class DeleteRequest {
+    private static final String URI = "https://api.practitest.com/api/v2/projects/1/instances/1.json";
     private static final String DEVELOPER_EMAIL = "YOUR EMAIL";
     private static final String API_TOKEN = "YOUR TOKEN";
 
@@ -23,9 +23,10 @@ public class GetWithResponse {
 
         HttpClient httpclient = new DefaultHttpClient();
 
-        HttpGet request = new HttpGet(URI);
+        HttpDelete request = new HttpDelete(URI);
         request.setHeader("Authorization", "Basic " + new String(encoding));
-        request.addHeader("Content-Type", "application/json");
+        request.addHeader("content-type", "application/json");
+
 
         System.out.println("executing request " + request.getURI());
 

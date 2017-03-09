@@ -14,9 +14,9 @@ import org.apache.commons.codec.binary.Base64;
  * This example demonstrates how to call practiTest API V2 with basic auth (Get request)
  */
 public class PostRequest {
-  private static final String URI = "http://localhost:3000/api/v2/projects/1/instances.json";
-  private static final String DEVELOPER_EMAIL = "user@pt.com";
-  private static final String API_TOKEN = "e9f80dfde63b1bf95c18cf5e9eb9498b71011f56";
+    private static final String URI = "https://api.practitest.com/api/v2/projects/1/instances.json";
+    private static final String DEVELOPER_EMAIL = "YOUR EMAIL";
+    private static final String API_TOKEN = "YOUR TOKEN";
 
     public final static void main(String[] args) throws Exception {
 
