@@ -10,8 +10,7 @@ import org.apache.commons.codec.binary.Base64;
 ;
 
 /**
- * This example demonstrates the use of the {@link ResponseHandler} to simplify
- * the process of processing the HTTP response and releasing associated resources.
+ * This example demonstrates how to call practiTest API V2 with basic auth (Get request)
  */
 public class GetWithResponse {
   private static final String URI = "https://api.practitest.com/api/v2/projects.json";
@@ -42,10 +41,6 @@ public class GetWithResponse {
             }
         } catch (Throwable e) {
             e.printStackTrace();
-            //  InputStream error = e.getErrorStream();
-            //  for (int i = 0; i < error.available(); i++) {
-            //    System.out.println("" + error.read());
-            //  }
         }
 
         System.out.println("----------------------------------------");
