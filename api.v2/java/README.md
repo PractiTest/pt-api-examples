@@ -4,5 +4,5 @@ Run it using Maven like this:
 
 ```
 mvn compile
-mvn exec:java -Dexec.mainClass=com.practitest.examples.GetRequest
+mvn exec:java -Dexec.mainClass=com.practitest.examples.GetWithResponse
 ```
