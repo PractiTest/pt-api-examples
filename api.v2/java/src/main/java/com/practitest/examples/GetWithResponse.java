@@ -6,6 +6,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.util.EntityUtils;
+import org.apache.commons.codec.binary.Base64;
+;
 
 /**
  * This example demonstrates the use of the {@link ResponseHandler} to simplify
@@ -18,9 +20,12 @@ public class GetWithResponse {
 
     public final static void main(String[] args) throws Exception {
 
+        byte[] encoding = Base64.encodeBase64((DEVELOPER_EMAIL + ":" + API_TOKEN).getBytes());
+
         HttpClient httpclient = new DefaultHttpClient();
 
         HttpGet request = new HttpGet(URI);
+        request.setHeader("Authorization", "Basic " + new String(encoding));
 
         System.out.println("executing request " + request.getURI());
 
