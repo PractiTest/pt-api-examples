@@ -7,11 +7,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.util.EntityUtils;
 import org.apache.commons.codec.binary.Base64;
-;
 
-/**
- * This example demonstrates how to call practiTest API V2 with basic auth (Get request)
- */
 public class DeleteRequest {
     private static final String URI = "https://api.practitest.com/api/v2/projects/1/instances/1.json";
     private static final String DEVELOPER_EMAIL = "YOUR EMAIL";
