@@ -1,3 +1,9 @@
+// curl -H "Content-Type:application/json" \
+// -u test@pt.com:xxx \
+// -X POST https://api.practitest.com/api/v2/projects/4566/instances.json \
+// -d '{"data": { "type": "instances", "attributes": {"test-id": 233, "set-id": 33, "priority": "2-high" } }}'
+
+
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -6,55 +12,63 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 
 
-string token = "YOUR TOKEN";
-string developerEmail = "YOUR_EMAIL";
-
-
-var request = WebRequest.Create("https://api.practitest.com/api/v2/projects/{projectId}/instances.json");
-
-string authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(developerEmail + ":" + token));
-request.Headers["Authorization"] = "Basic " + authInfo;
-
-request.Method = HttpMethod.Post.Method;
-request.ContentType = "application/json";
-
-var data = new JObject
+namespace ConsoleApplication1
 {
-    {"type", "instances"},
-    {"attributes",  new JObject { { "test-id", 80902 }, { "set-id", 19916 }, {"priority","2-high"} } }
-};
-
-var String json_data = (new JObject { { "data", data } }).ToString()
-
-using (var streamWriter = new StreamWriter(request.GetRequestStream()))
-{
-    string j = json_data;
-    streamWriter.Write(j);
-}
+    class Program
+    {
 
 
-try{
-  var response = request.GetResponse();
-  Console.WriteLine(response.Headers);
-  // Get the stream associated with the response.
-  Stream receiveStream = response.GetResponseStream ();
+        static void Main(string[] args)
+        {
+            string token = "YOUR_TOKEN";
+            string developerEmail = "YOUR_EMAIL";
+            var request = WebRequest.Create("https://api.practitest.com/api/v2/projects/YOUR_PROJECT_ID/instances.json");
 
-  // Pipes the stream to a higher level stream reader with the required encoding format.
-  StreamReader readStream = new StreamReader (receiveStream, Encoding.UTF8);
+            string authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(developerEmail + ":" + token));
+            request.Headers["Authorization"] = "Basic " + authInfo;
 
-  Console.WriteLine ("Response stream received.");
-  Console.WriteLine (readStream.ReadToEnd ());
-  response.Close ();
-  readStream.Close ();
-} catch (WebException ex) {
-  Console.WriteLine("Exception:");
-  Console.WriteLine(ex.Response.Headers);
-  var resp = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
-  Console.WriteLine(resp);
+            request.Method = HttpMethod.Post.Method;
+            request.ContentType = "application/json";
+
+            var data = new JObject{
+                  {"type", "instances"},
+                  {"attributes",  new JObject { { "test-id", 74836 }, { "set-id", 18342 }, {"priority","2-high"} } }
+            };
+
+            var json_data = (new JObject { { "data", data } }).ToString();
+
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                streamWriter.Write(json_data);
+            }
+
+
+            try
+            {
+                var response = request.GetResponse();
+                Console.WriteLine(response.Headers);
+                // Get the stream associated with the response.
+                Stream receiveStream = response.GetResponseStream();
+
+                // Pipes the stream to a higher level stream reader with the required encoding format.
+                StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+
+                Console.WriteLine("Response stream received.");
+                Console.WriteLine(readStream.ReadToEnd());
+                response.Close();
+                readStream.Close();
+            }
+            catch (WebException ex)
+            {
+                Console.WriteLine("Exception:");
+                Console.WriteLine(ex.Response.Headers);
+                var resp = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                Console.WriteLine(resp);
+            }
+        }
+    }
 }
