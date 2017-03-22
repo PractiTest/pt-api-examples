@@ -2,7 +2,7 @@
 // curl -H "Content-Type:application/json" \
 //   -u test@pt.com:YOUR TOKEN \
 //   -X POST https://api.practitest.com/api/v2/projects/1/runs.json \
-//   -d '{"data": { "type": "instances", "attributes": {"instance-id": 3254471, "exit-code": 0 }, "files": {"data": [{"filename": "one.log", "content_encoded": "'"$( base64 /tmp/log_wifi1.log)"'" }, {"filename": "two.log", "content_encoded": "'"$( base64 /tmp/log_wifi2.log)"'" }]} }  }'
+//   -d '{"data": { "type": "instances", "attributes": {"instance-id": 3254471, "exit-code": 0 }, "files": {"data": [{"filename": "log1.log", "content_encoded": "'"$( base64 /tmp/log1.log)"'" }, {"filename": "important_data.html", "content_encoded": "'"$( base64 /tmp/important_data.html)"'" }]} }  }'
 
 
 
@@ -37,7 +37,7 @@ namespace ConsoleApplication1
             request.ContentType = "application/json";
 
 
-            string[] filePaths = new string[] { @"C:\Users\gal\Desktop\christine\another_file.txt", @"C:\Users\gal\Desktop\christine\post.cs" };
+            string[] filePaths = new string[] { @"C:\Users\lea\Desktop\log1.log", @"C:\Users\lea\Desktop\important_data.html" };
 
             var filesArr = new JArray();
             foreach (var path in filePaths)
