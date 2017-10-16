@@ -16,7 +16,7 @@ DEVELOPER_EMAIL= "test@pt.com"
 
 runs_resource = URI.parse("#{BASE_URL}/projects/1/runs.json")
 http = Net::HTTP.new(runs_resource.host, runs_resource.port)
-# http.use_ssl = true
+http.use_ssl = true
 
 req = Net::HTTP::Post.new(runs_resource.path, 'Content-Type' => 'application/json')
 req.basic_auth DEVELOPER_EMAIL, TOKEN
