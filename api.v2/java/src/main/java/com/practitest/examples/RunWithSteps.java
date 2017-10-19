@@ -11,9 +11,9 @@ import org.apache.commons.codec.binary.Base64;
 import java.io.*;
 
 public class RunWithAttachments {
-    private static final String URI = "https://api.practitest.com/api/v2/projects/YOUR_PROJECT_ID/runs.json";
-    private static final String DEVELOPER_EMAIL = "YOUR EMAIL";
-    private static final String API_TOKEN = "YOUR TOKEN";
+    private static final String URI = "https://stage.practitest.com/api/v2/projects/4575/runs.json";
+    private static final String DEVELOPER_EMAIL = "christine@pt.com";
+    private static final String API_TOKEN = "4a1806d1f2e977d034d28dd0b5f122775eee6195";
 
     public final static void main(String[] args) throws Exception {
 
@@ -23,11 +23,10 @@ public class RunWithAttachments {
 
         String json_str = "{" +
           "\"data\" : {\"attributes\" : {" +
-            "\"instance-id\": 3254471," +
-            "\"exit-code\": 0" +
-          "}, \"files\": { \"data\": [" +
-            "{ \"filename\": \"one.log\", \"content_encoded\": \"" + filenameToBase64("/tmp/log_wifi1.log") + "\"}," +
-            "{ \"filename\": \"two.log\", \"content_encoded\": \"" + filenameToBase64("/tmp/log_wifi2.log") + "\"}" +
+            "\"instance-id\": 101200 ," +
+            "}, 
+           "\"steps\": { \"data\": {" +
+           "\"name\": \"step one\", \"expected-results\": \"result\", \"status\": \"FAILED\"}, {\"name\": \"step two\", \"expected-results\": \"result2\", \"status\": \"PASSED\"}]
           "]} } }";
 
         HttpPost request = new HttpPost(URI);
