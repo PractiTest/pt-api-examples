@@ -1,5 +1,5 @@
-import api.practitest.PractiTestAPI;
-import api.practitest.runs.StepModel;
+import com.practitest.api.example.PractiTestAPI;
+import com.practitest.api.model.runs.StepModel;
 import com.jayway.restassured.response.Response;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.openqa.selenium.By;
