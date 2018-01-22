@@ -12,49 +12,59 @@ import java.util.List;
 
 public class PractiTestAPI {
 
+    private final static  String projectID = System.getProperty("PROJECT_ID");
+
     public static Response sendGetSteps(String id)
     {
-        return RequestFactory.doGet("com/v2/projects/4650/steps.json?test-ids=" +id);
+        return RequestFactory.doGet("com/v2/projects/"+projectID+"/steps.json?test-ids=" +id);
     }
 
     public static void sendCreateRun(String body)
     {
-        RequestFactory.doPost("com/v2/projects/4650/runs.json", body).prettyPrint();
+        RequestFactory.doPost("com/v2/projects/"+projectID+"/runs.json", body);
     }
 
-    public static void sendCreateRun(int instanceID, List<StepModel> step)
+    public static Response sendCreateRun(int instanceID, List<StepModel> step)
     {
         Data data = new Data();
         data.setType("instances");
         data.setAttributes(new Attributes(instanceID));
         data.setSteps(new Steps(step));
-        RequestFactory.doPost("com/v2/projects/4650/runs.json", new RunsModel(data)).prettyPrint();
+        return RequestFactory.doPost("com/v2/projects/"+projectID+"/runs.json", new RunsModel(data)).getBody().jsonPath().get("data.id");
+    }
+
+    public static Response sendCreateRun(int instanceID)
+    {
+        Data data = new Data();
+        data.setType("instances");
+        data.setAttributes(new Attributes(instanceID));
+        return RequestFactory.doPost("com/v2/projects/"+projectID+"/runs.json", new RunsModel(data)).getBody().jsonPath().get("data.id");
     }
 
     public static void sendCreateInstance(String body)
     {
-        RequestFactory.doPost("com/v2/projects/4650/instances.json", body).prettyPrint();
+        RequestFactory.doPost("com/v2/projects/"+projectID+"/instances.json", body).prettyPrint();
     }
 
-    public static void sendCreateInstance(int setID, int testID)
+    public static Response sendCreateInstance(int setID, int testID)
     {
         com.practitest.api.model.instance.Data data = new com.practitest.api.model.instance.Data();
         data.setAttributes(new com.practitest.api.model.instance.Attributes(setID, testID));
 
-        RequestFactory.doPost("com/v2/projects/4650/instances.json", new InstanceModel(data)).prettyPrint();
+        return RequestFactory.doPost("com/v2/projects/"+projectID+"/instances.json", new InstanceModel(data));
     }
 
-    public static void sendCreateTestSet(String body)
+    public static Response sendCreateTestSet(String body)
     {
-        RequestFactory.doPost("com/v2/projects/4650/sets.json", body).prettyPrint();
+        return RequestFactory.doPost("com/v2/projects/"+projectID+"/sets.json", body);
     }
 
-    public static void sendCreateTestSet(String name, List<Integer> testIDs)
+    public static Response sendCreateTestSet(String name, List<Integer> testIDs)
     {
         com.practitest.api.model.sets.Data data = new com.practitest.api.model.sets.Data();
         data.setInstances(new Instances(testIDs));
         data.setAttributes(new com.practitest.api.model.sets.Attributes(name));
-        RequestFactory.doPost("com/v2/projects/4650/sets.json", new SetsModel(data)).prettyPrint();
+        return RequestFactory.doPost("com/v2/projects/"+projectID+"/sets.json", new SetsModel(data));
     }
 
 
