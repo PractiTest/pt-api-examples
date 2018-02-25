@@ -2,6 +2,7 @@ package com.listeners;
 
 import com.practitest.api.example.PractiTestWriter;
 import com.practitest.integration.ExtractTests;
+import com.webdriver.example.Utils.Log;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -10,6 +11,8 @@ import java.util.List;
 
 public class TestNGListenerForPractiTest implements ITestListener {
 
+        protected Integer instanceID = null;
+
 
         @Override
         public void onTestStart(ITestResult result) {
@@ -17,10 +20,12 @@ public class TestNGListenerForPractiTest implements ITestListener {
 
         @Override
         public void onTestSuccess(ITestResult result) {
+                PractiTestWriter.submitResults(instanceID, 0);
         }
 
         @Override
         public void onTestFailure(ITestResult result) {
+                PractiTestWriter.submitResults(instanceID, 1);
         }
 
         @Override
@@ -33,12 +38,20 @@ public class TestNGListenerForPractiTest implements ITestListener {
 
         @Override
         public void onStart(ITestContext context) {
-                List<Integer> testIDs = ExtractTests.extractAllTestIds(context);
-                //Create test run for all tests in current execution
-                Integer setID = PractiTestWriter.createNewSet(testIDs);
-                //Store SetID for further usage
-                System.setProperty("currentSetId", setID.toString());
-                PractiTestWriter.createNewSet(testIDs);
+                Integer existingTestID = PractiTestWriter.getSetID();
+                if (existingTestID == 0)
+                {
+                        List<Integer> testIDs = ExtractTests.extractAllTestIds(context);
+                        //Create test run for all tests in current execution
+                        Integer setID = PractiTestWriter.createNewSet(testIDs);
+                        //Create new instance
+                        this.instanceID = PractiTestWriter.createNewInstance(setID, testIDs);
+                }
+                else
+                {
+                        Log.info("Using existing TestSEtID: "+existingTestID.toString());
+                }
+
         }
 
 

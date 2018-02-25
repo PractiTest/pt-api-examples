@@ -14,6 +14,11 @@ public class Attributes {
     @JsonProperty("instance-id")
     private int instanceId;
 
+
+
+    @JsonProperty("exit-code")
+    private int exitcode;
+
     /**
      * No args constructor for use in serialization
      *
@@ -27,9 +32,10 @@ public class Attributes {
      */
 
 
-    public Attributes(int instanceId) {
+    public Attributes(int instanceId, int exitcode) {
         super();
         this.instanceId = instanceId;
+        this.exitcode = exitcode;
     }
 
     @JsonProperty("instance-id")
@@ -40,6 +46,16 @@ public class Attributes {
     @JsonProperty("instance-id")
     public void setInstanceid(int instanceId) {
         this.instanceId = instanceId;
+    }
+
+    @JsonProperty("exit-code")
+    public int getExitcode() {
+        return exitcode;
+    }
+
+    @JsonProperty("exit-code")
+    public void setExitcode(int exitcode) {
+        this.exitcode = exitcode;
     }
 
 }
