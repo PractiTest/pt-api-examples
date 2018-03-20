@@ -25,9 +25,9 @@ public class PractiTestWriter {
      *
      * @return set id for the project
      */
-    public static Integer getSetID()
+    public static Integer getSetID(String setName)
     {
-        Response response = PractiTestAPI.sendGetTestSet();
+        Response response = PractiTestAPI.sendGetTestSetByName(setName);
         try
         {
             return response.getBody().jsonPath().get("data.id");
@@ -60,9 +60,36 @@ public class PractiTestWriter {
         return PractiTestAPI.sendCreateInstance(setID, testID).getBody().jsonPath().get("data.id");
     }
 
-    public static Integer createNewInstance(Integer setID, List<Integer> testID)
+    public static void createAllInstances(Integer setID, List<Integer> testID)
     {
-        return PractiTestAPI.sendCreateInstance(setID, testID.get(0)).getBody().jsonPath().get("data.id");
+        for (Integer aTestID : testID) {
+            createNewInstance(setID, aTestID);
+        }
+    }
+
+    public static List<Integer> getInstancesByTestSetID(Integer testSet)
+    {
+        return PractiTestAPI.sendGetInstances(testSet).body().jsonPath().get("data.id");
+    }
+
+    public static Integer getInstancesByTestID(Integer testID)
+    {
+        return PractiTestAPI.sendGetInstanceBytestID(testID).body().jsonPath().get("data.id");
+    }
+
+    public static String getInstancesByTestIDAndTestSetID(String testID, Integer testSetID)
+    {
+        return PractiTestAPI.sendGetInstanceByTestIDAndTestSetID(testID, testSetID).body().jsonPath().get("data.id");
+    }
+
+    public static List<Integer> getTestIDsForTestSetID(Integer testSet)
+    {
+        return PractiTestAPI.sendGetInstances(testSet).body().jsonPath().get("data.attributes.test-id");
+    }
+
+    public static void removeInstance(Integer instanceID)
+    {
+        PractiTestAPI.sendRemoveInstance(instanceID);
     }
 
     /**
@@ -71,12 +98,12 @@ public class PractiTestWriter {
      * @param stepModel step Model which was used for this test
      * @return extracts result ID for further usage
      */
-    public static Integer submitResults(Integer instanceID, List<StepModel> stepModel)
+    public static Integer submitResults(String instanceID, List<StepModel> stepModel)
     {
         return PractiTestAPI.sendCreateRun(instanceID, stepModel).getBody().jsonPath().get("get.id");
     }
 
-    public static Integer submitResults(Integer instanceID, Integer statusCode)
+    public static Integer submitResults(String instanceID, Integer statusCode)
     {
         return PractiTestAPI.sendSubmitResult(instanceID, statusCode).getBody().jsonPath().get("data.id");
     }

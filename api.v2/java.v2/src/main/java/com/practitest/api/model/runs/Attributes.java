@@ -12,7 +12,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 public class Attributes {
 
     @JsonProperty("instance-id")
-    private int instanceId;
+    private String instanceId;
 
 
 
@@ -32,19 +32,19 @@ public class Attributes {
      */
 
 
-    public Attributes(int instanceId, int exitcode) {
+    public Attributes(String instanceId, int exitcode) {
         super();
         this.instanceId = instanceId;
         this.exitcode = exitcode;
     }
 
     @JsonProperty("instance-id")
-    public int getInstanceid() {
+    public String getInstanceid() {
         return instanceId;
     }
 
     @JsonProperty("instance-id")
-    public void setInstanceid(int instanceId) {
+    public void setInstanceid(String instanceId) {
         this.instanceId = instanceId;
     }
 

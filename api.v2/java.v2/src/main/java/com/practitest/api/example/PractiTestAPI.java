@@ -26,15 +26,15 @@ public class PractiTestAPI {
     {
         return RequestFactory.doGet("/v2/projects/"+projectID+"/steps.json?test-ids=" +id);
     }
-
-    /**
-     *
-     * @param body
-     */
-    public static void sendCreateRun(String body)
-    {
-        RequestFactory.doPost("/v2/projects/"+projectID+"/runs.json", body);
-    }
+//
+//    /**
+//     *
+//     * @param body
+//     */
+//    public static void sendCreateRun(String body)
+//    {
+//        RequestFactory.doPost("/v2/projects/"+projectID+"/runs.json", body);
+//    }
 
     /**
      *
@@ -42,7 +42,7 @@ public class PractiTestAPI {
      * @param step
      * @return
      */
-    public static Response sendCreateRun(int instanceID, List<StepModel> step)
+    public static Response sendCreateRun(String instanceID, List<StepModel> step)
     {
         Data data = new Data();
         data.setType("instances");
@@ -56,7 +56,7 @@ public class PractiTestAPI {
      * @param instanceID
      * @return
      */
-    public static Response sendCreateRun(int instanceID)
+    public static Response sendCreateRun(String instanceID)
     {
         Data data = new Data();
         data.setType("instances");
@@ -69,7 +69,7 @@ public class PractiTestAPI {
      * @param instanceID
      * @return
      */
-    public static Response sendSubmitResult(int instanceID, int exitCode)
+    public static Response sendSubmitResult(String instanceID, int exitCode)
     {
         Data data = new Data();
         data.setType("instances");
@@ -84,6 +84,26 @@ public class PractiTestAPI {
     public static void sendCreateInstance(String body)
     {
         RequestFactory.doPost("/v2/projects/"+projectID+"/instances.json", body).prettyPrint();
+    }
+
+    public static Response sendGetInstances(Integer testSetID)
+    {
+        return RequestFactory.doGet("/v2/projects/"+projectID+"/instances.json?set-ids="+testSetID.toString());
+    }
+
+    public static Response sendGetInstanceBytestID(Integer testID)
+    {
+        return RequestFactory.doGet("/v2/projects/"+projectID+"/instances.json?test-ids="+testID.toString());
+    }
+
+    public static Response sendGetInstanceByTestIDAndTestSetID(String testID, Integer testSetID)
+    {
+        return RequestFactory.doGet("/v2/projects/"+projectID+"/instances.json?test-ids="+testID+"&set-ids="+testSetID.toString());
+    }
+
+    public static Response sendRemoveInstance(Integer instanceID)
+    {
+        return RequestFactory.doDelete("/v2/projects/"+projectID+"/instances/"+instanceID.toString()+".json", "");
     }
 
     /**
@@ -117,6 +137,15 @@ public class PractiTestAPI {
     public static Response sendGetTestSet()
     {
         return RequestFactory.doGet("/v2/projects/"+projectID+"sets.json");
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static Response sendGetTestSetByName(String nameExect)
+    {
+        return RequestFactory.doGet("/v2/projects/"+projectID+"sets.json?name_exact="+nameExect);
     }
 
     /**
