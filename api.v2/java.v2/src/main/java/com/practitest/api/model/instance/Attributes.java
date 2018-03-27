@@ -13,7 +13,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 public class Attributes {
 
     @JsonProperty("set-id")
-    private int setId;
+    private String setId;
     @JsonProperty("test-id")
     private int testId;
 
@@ -29,19 +29,19 @@ public class Attributes {
      * @param testId
      * @param setId
      */
-    public Attributes(int setId, int testId) {
+    public Attributes(String setId, int testId) {
         super();
         this.setId = setId;
         this.testId = testId;
     }
 
     @JsonProperty("set-id")
-    public int getSetId() {
+    public String getSetId() {
         return setId;
     }
 
     @JsonProperty("set-id")
-    public void setSetId(int setId) {
+    public void setSetId(String setId) {
         this.setId = setId;
     }
 

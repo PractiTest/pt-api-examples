@@ -35,7 +35,7 @@ public class RunWithTests {
         PractiTestAPI.sendCreateTestSet("new testing", testIDs);
 
         //Create new instance
-        PractiTestAPI.sendCreateInstance(20803, 84149);
+        PractiTestAPI.sendCreateInstance("20803", 84149);
 
         //Setup chromeDriver
         ChromeDriverManager.getInstance().setup();
@@ -80,7 +80,7 @@ public class RunWithTests {
         stepModel.add(step3);
 
         //Submit results
-        PractiTestAPI.sendCreateRun(101263, stepModel);
+        PractiTestAPI.sendCreateRun("101263", stepModel);
 
     }
 }

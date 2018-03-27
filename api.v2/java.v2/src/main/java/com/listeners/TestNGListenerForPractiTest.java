@@ -11,7 +11,7 @@ import java.util.List;
 
 public class TestNGListenerForPractiTest implements ITestListener {
 
-        protected Integer setID = null;
+        protected String setID = null;
 
 
         @Override
@@ -20,14 +20,14 @@ public class TestNGListenerForPractiTest implements ITestListener {
 
         @Override
         public void onTestSuccess(ITestResult result) {
-                String instanceID = PractiTestWriter.getInstancesByTestIDAndTestSetID(result.getMethod().getDescription(), this.setID);
-                PractiTestWriter.submitResults(instanceID, 0);
+                List<String> instanceID = PractiTestWriter.getInstancesByTestIDAndTestSetID(result.getMethod().getDescription(), this.setID);
+                PractiTestWriter.submitResults(instanceID.get(0), 0);
         }
 
         @Override
         public void onTestFailure(ITestResult result) {
-                String instanceID = PractiTestWriter.getInstancesByTestIDAndTestSetID(result.getMethod().getDescription(), this.setID);
-                PractiTestWriter.submitResults(instanceID, 1);
+                List<String> instanceID = PractiTestWriter.getInstancesByTestIDAndTestSetID(result.getMethod().getDescription(), this.setID);
+                PractiTestWriter.submitResults(instanceID.get(0), 1);
         }
 
         @Override
@@ -40,10 +40,10 @@ public class TestNGListenerForPractiTest implements ITestListener {
 
         @Override
         public void onStart(ITestContext context) {
-                Integer existingTestSetID = PractiTestWriter.getSetID("ExistingSet");
+                String existingTestSetID = PractiTestWriter.getSetID("bla");
                 //extract all tests for current execution
                 List<Integer> testIDs = ExtractTests.extractAllTestIds(context);
-                if (existingTestSetID == 0)
+                if (existingTestSetID == null)
                 {
                         //Create test run for all tests in current execution
                         this.setID = PractiTestWriter.createNewSet(testIDs);
@@ -59,7 +59,7 @@ public class TestNGListenerForPractiTest implements ITestListener {
                         for (Integer currentTestSetTestID : currentTestSetTestIDs) {
                                 PractiTestWriter.removeInstance(PractiTestWriter.getInstancesByTestID(currentTestSetTestID));
                         }
-                        Log.info("Using existing TestSEtID: "+existingTestSetID.toString());
+                        Log.info("Using existing TestSEtID: "+existingTestSetID);
                 }
                 //Create new instances for all tests in TestSet
                 PractiTestWriter.createAllInstances(this.setID, testIDs);

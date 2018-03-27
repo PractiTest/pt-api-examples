@@ -17,7 +17,7 @@ public class PractiTestWriter {
     private static String getNameForNewRun() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
-        String testSuite = System.getProperty("test");
+        String testSuite = "Google test";
         return testSuite + " " + dateFormat.format(date);
     }
 
@@ -25,16 +25,17 @@ public class PractiTestWriter {
      *
      * @return set id for the project
      */
-    public static Integer getSetID(String setName)
+    public static String getSetID(String setName)
     {
         Response response = PractiTestAPI.sendGetTestSetByName(setName);
+        response.prettyPrint();
         try
         {
             return response.getBody().jsonPath().get("data.id");
         }
         catch (Exception e)
         {
-          return 0;
+          return null;
         }
     }
 
@@ -43,9 +44,10 @@ public class PractiTestWriter {
      * @param testIDs List of tests which should be assigned to this Test Set
      * @return new TestSetID
      */
-    public static Integer createNewSet(List<Integer> testIDs)
+    public static String createNewSet(List<Integer> testIDs)
     {
         Response response = PractiTestAPI.sendCreateTestSet(getNameForNewRun(), testIDs);
+        response.prettyPrint();
         return PractiTestAPI.sendCreateTestSet(getNameForNewRun(), testIDs).getBody().jsonPath().get("data.id") ;
     }
 
@@ -55,19 +57,19 @@ public class PractiTestWriter {
      * @param testID TestCase ID which should be used to create new instance
      * @return new Instance ID
      */
-    public static Integer createNewInstance(Integer setID, Integer testID)
+    public static String createNewInstance(String setID, Integer testID)
     {
         return PractiTestAPI.sendCreateInstance(setID, testID).getBody().jsonPath().get("data.id");
     }
 
-    public static void createAllInstances(Integer setID, List<Integer> testID)
+    public static void createAllInstances(String setID, List<Integer> testID)
     {
         for (Integer aTestID : testID) {
             createNewInstance(setID, aTestID);
         }
     }
 
-    public static List<Integer> getInstancesByTestSetID(Integer testSet)
+    public static List<Integer> getInstancesByTestSetID(String testSet)
     {
         return PractiTestAPI.sendGetInstances(testSet).body().jsonPath().get("data.id");
     }
@@ -77,12 +79,12 @@ public class PractiTestWriter {
         return PractiTestAPI.sendGetInstanceBytestID(testID).body().jsonPath().get("data.id");
     }
 
-    public static String getInstancesByTestIDAndTestSetID(String testID, Integer testSetID)
+    public static List<String> getInstancesByTestIDAndTestSetID(String testID, String testSetID)
     {
         return PractiTestAPI.sendGetInstanceByTestIDAndTestSetID(testID, testSetID).body().jsonPath().get("data.id");
     }
 
-    public static List<Integer> getTestIDsForTestSetID(Integer testSet)
+    public static List<Integer> getTestIDsForTestSetID(String testSet)
     {
         return PractiTestAPI.sendGetInstances(testSet).body().jsonPath().get("data.attributes.test-id");
     }
@@ -103,7 +105,7 @@ public class PractiTestWriter {
         return PractiTestAPI.sendCreateRun(instanceID, stepModel).getBody().jsonPath().get("get.id");
     }
 
-    public static Integer submitResults(String instanceID, Integer statusCode)
+    public static String submitResults(String instanceID, Integer statusCode)
     {
         return PractiTestAPI.sendSubmitResult(instanceID, statusCode).getBody().jsonPath().get("data.id");
     }
