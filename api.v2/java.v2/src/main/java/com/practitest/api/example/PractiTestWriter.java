@@ -3,23 +3,9 @@ package com.practitest.api.example;
 import com.jayway.restassured.response.Response;
 import com.practitest.api.model.runs.StepModel;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class PractiTestWriter {
-
-    /**
-     *
-     * @return Generates name for new test run with time stamp
-     */
-    private static String getNameForNewRun() {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date date = new Date();
-        String testSuite = "Google test";
-        return testSuite + " " + dateFormat.format(date);
-    }
 
     /**
      *
@@ -31,7 +17,7 @@ public class PractiTestWriter {
         response.prettyPrint();
         try
         {
-            return response.getBody().jsonPath().get("data.id");
+            return response.getBody().jsonPath().get("data.id[0]");
         }
         catch (Exception e)
         {
@@ -46,9 +32,9 @@ public class PractiTestWriter {
      */
     public static String createNewSet(List<Integer> testIDs)
     {
-        Response response = PractiTestAPI.sendCreateTestSet(getNameForNewRun(), testIDs);
+        Response response = PractiTestAPI.sendCreateTestSet(System.getProperty("groups"), testIDs); //
         response.prettyPrint();
-        return PractiTestAPI.sendCreateTestSet(getNameForNewRun(), testIDs).getBody().jsonPath().get("data.id") ;
+        return response.getBody().jsonPath().get("data.id") ;
     }
 
     /**
@@ -64,9 +50,14 @@ public class PractiTestWriter {
 
     public static void createAllInstances(String setID, List<Integer> testID)
     {
-        for (Integer aTestID : testID) {
-            createNewInstance(setID, aTestID);
+        for (int i =0; i<testID.size();i++)
+        {
+            createNewInstance(setID, testID.get(i));
         }
+
+//        for (Integer aTestID : testID) {
+//            createNewInstance(setID, aTestID);
+//        }
     }
 
     public static List<Integer> getInstancesByTestSetID(String testSet)

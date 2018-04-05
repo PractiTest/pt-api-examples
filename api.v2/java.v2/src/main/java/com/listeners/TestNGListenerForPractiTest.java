@@ -40,13 +40,13 @@ public class TestNGListenerForPractiTest implements ITestListener {
 
         @Override
         public void onStart(ITestContext context) {
-                String existingTestSetID = PractiTestWriter.getSetID("bla");
+                String existingTestSetID = PractiTestWriter.getSetID(System.getProperty("groups"));
                 //extract all tests for current execution
                 List<Integer> testIDs = ExtractTests.extractAllTestIds(context);
                 if (existingTestSetID == null)
                 {
-                        //Create test run for all tests in current execution
-                        this.setID = PractiTestWriter.createNewSet(testIDs);
+                       //Create test run for all tests in current execution
+                       this.setID = PractiTestWriter.createNewSet(testIDs);
                 }
                 else
                 {
@@ -63,6 +63,8 @@ public class TestNGListenerForPractiTest implements ITestListener {
                 }
                 //Create new instances for all tests in TestSet
                 PractiTestWriter.createAllInstances(this.setID, testIDs);
+                String current = PractiTestWriter.getSetID("test2");
+                Log.info(current);
         }
 
 

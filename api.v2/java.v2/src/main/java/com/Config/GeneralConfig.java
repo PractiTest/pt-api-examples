@@ -12,6 +12,8 @@ public class GeneralConfig {
     public static final String DEV_MAIL                 = "DEVELOPER_EMAIL";
     public static final String API_TOKEN                = "API_TOKEN";
     public static final String PROJECT_ID               = "PROJECT_ID";
+    public static final String SET_NAME                 = "groups";
+
 
     protected static Properties m_props = new Properties();
 

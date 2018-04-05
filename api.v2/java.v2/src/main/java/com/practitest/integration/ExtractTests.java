@@ -1,5 +1,7 @@
 package com.practitest.integration;
 
+import com.webdriver.example.Utils.Log;
+import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.ITestNGMethod;
 
@@ -13,6 +15,11 @@ public class ExtractTests {
     {
         ITestNGMethod[] testMethods = context.getAllTestMethods();
         List<String> testIds = new ArrayList(0);
+        if (testMethods.length == 0)
+        {
+            Log.error("PLEASE PROVIDE VALID GROUP NAME");
+            Assert.fail("No test methods found for specified group");
+        }
         for (ITestNGMethod testMethod : testMethods) {
             testIds.add(testMethod.getDescription());
         }
