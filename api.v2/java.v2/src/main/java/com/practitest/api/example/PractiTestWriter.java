@@ -1,5 +1,6 @@
 package com.practitest.api.example;
 
+import com.Config.GeneralConfig;
 import com.jayway.restassured.response.Response;
 import com.practitest.api.model.runs.StepModel;
 
@@ -13,16 +14,17 @@ public class PractiTestWriter {
      */
     public static String getSetID(String setName)
     {
-        Response response = PractiTestAPI.sendGetTestSetByName(setName);
-        response.prettyPrint();
-        try
-        {
-            return response.getBody().jsonPath().get("data.id[0]");
-        }
-        catch (Exception e)
-        {
-          return null;
-        }
+
+            Response response = PractiTestAPI.sendGetTestSetByName(setName);
+            response.prettyPrint();
+            try
+            {
+                return response.getBody().jsonPath().get("data.id");
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
     }
 
     /**
@@ -32,7 +34,7 @@ public class PractiTestWriter {
      */
     public static String createNewSet(List<Integer> testIDs)
     {
-        Response response = PractiTestAPI.sendCreateTestSet(System.getProperty("groups"), testIDs); //
+        Response response = PractiTestAPI.sendCreateTestSet(GeneralConfig.getConfigurationValue("groups"), testIDs);//System.getProperty("groups"), testIDs); //
         response.prettyPrint();
         return response.getBody().jsonPath().get("data.id") ;
     }

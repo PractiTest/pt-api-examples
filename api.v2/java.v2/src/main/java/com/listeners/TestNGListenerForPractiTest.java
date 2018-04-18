@@ -1,5 +1,6 @@
 package com.listeners;
 
+import com.Config.GeneralConfig;
 import com.practitest.api.example.PractiTestWriter;
 import com.practitest.integration.ExtractTests;
 import com.webdriver.example.Utils.Log;
@@ -40,12 +41,12 @@ public class TestNGListenerForPractiTest implements ITestListener {
 
         @Override
         public void onStart(ITestContext context) {
-                String existingTestSetID = PractiTestWriter.getSetID(System.getProperty("groups"));
+                String existingTestSetID = PractiTestWriter.getSetID(GeneralConfig.getConfigurationValue("groups"));//System.getProperty("groups"));
                 //extract all tests for current execution
                 List<Integer> testIDs = ExtractTests.extractAllTestIds(context);
                 if (existingTestSetID == null)
                 {
-                       //Create test run for all tests in current execution
+                       Log.info("Creating new test set");
                        this.setID = PractiTestWriter.createNewSet(testIDs);
                 }
                 else

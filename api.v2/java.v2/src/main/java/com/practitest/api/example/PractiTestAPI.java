@@ -8,6 +8,7 @@ import com.practitest.api.model.instance.InstanceModel;
 import com.practitest.api.model.runs.*;
 import com.practitest.api.model.sets.Instances;
 import com.practitest.api.model.sets.SetsModel;
+import org.testng.Assert;
 
 import java.util.List;
 
@@ -153,6 +154,10 @@ public class PractiTestAPI {
      */
     public static Response sendGetTestSetByName(String nameExect)
     {
+        if(nameExect == null)
+        {
+            Assert.fail("Please provide test set name");
+        }
         return RequestFactory.doGet("/api/v2/projects/"+projectID+"/sets.json?name_like="+nameExect);
     }
 
