@@ -103,4 +103,9 @@ public class PractiTestWriter {
         return PractiTestAPI.sendSubmitResult(instanceID, statusCode).getBody().jsonPath().get("data.id");
     }
 
+    public static String submitResults(String instanceID, String error, Integer statusCode)
+    {
+        return PractiTestAPI.sendSubmitResult(instanceID, error, statusCode).getBody().jsonPath().get("data.id");
+    }
+
 }

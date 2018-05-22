@@ -85,6 +85,24 @@ public class PractiTestAPI {
 
     /**
      *
+     * @param instanceID
+     * @return
+     */
+    public static Response sendSubmitResult(String instanceID, String error, int exitCode) {
+        Data data = new Data();
+        data.setType("instances");
+        Attributes attributes = new Attributes();
+        attributes.setExitcode(exitCode);
+        attributes.setInstanceid(instanceID);
+        attributes.setAutomatedExecutionOutput(error);
+        data.setAttributes(attributes);
+        Response response = RequestFactory.doPost("/api/v2/projects/" + projectID + "/runs.json", new RunsModel(data));
+        response.prettyPrint();
+        return response;
+    }
+
+    /**
+     *
      * @param body
      */
     public static void sendCreateInstance(String body)

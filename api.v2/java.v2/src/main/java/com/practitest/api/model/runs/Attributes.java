@@ -16,6 +16,10 @@ public class Attributes {
 
 
 
+    @JsonProperty("automated-execution-output")
+    private String automatedExecutionOutput;
+
+
     @JsonProperty("exit-code")
     private int exitcode;
 
@@ -38,6 +42,13 @@ public class Attributes {
         this.exitcode = exitcode;
     }
 
+    public Attributes(String instanceId, String automatedExecutionOutput, int exitcode) {
+        super();
+        this.instanceId = instanceId;
+        this.automatedExecutionOutput = automatedExecutionOutput;
+        this.exitcode = exitcode;
+    }
+
     @JsonProperty("instance-id")
     public String getInstanceid() {
         return instanceId;
@@ -56,6 +67,16 @@ public class Attributes {
     @JsonProperty("exit-code")
     public void setExitcode(int exitcode) {
         this.exitcode = exitcode;
+    }
+
+    @JsonProperty("automated-execution-output")
+    public String getAutomatedExecutionOutput() {
+        return automatedExecutionOutput;
+    }
+
+    @JsonProperty("automated-execution-output")
+    public void setAutomatedExecutionOutput(String automatedExecutionOutput) {
+        this.automatedExecutionOutput = automatedExecutionOutput;
     }
 
 }

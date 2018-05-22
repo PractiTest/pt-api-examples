@@ -28,7 +28,8 @@ public class TestNGListenerForPractiTest implements ITestListener {
         @Override
         public void onTestFailure(ITestResult result) {
                 List<String> instanceID = PractiTestWriter.getInstancesByTestIDAndTestSetID(result.getMethod().getDescription(), this.setID);
-                PractiTestWriter.submitResults(instanceID.get(0), 1);
+
+                PractiTestWriter.submitResults(instanceID.get(0), result.getThrowable().getMessage(), 1);
         }
 
         @Override
@@ -41,8 +42,11 @@ public class TestNGListenerForPractiTest implements ITestListener {
 
         @Override
         public void onStart(ITestContext context) {
+                //Load configuration file
+                GeneralConfig.loadConfig();
+                //Check if Set ID specified is present in the system
                 String existingTestSetID = PractiTestWriter.getSetID(GeneralConfig.getConfigurationValue("groups"));//System.getProperty("groups"));
-                //extract all tests for current execution
+                //extract all automated tests for current execution
                 List<Integer> testIDs = ExtractTests.extractAllTestIds(context);
                 if (existingTestSetID == null)
                 {
@@ -54,9 +58,9 @@ public class TestNGListenerForPractiTest implements ITestListener {
                         this.setID = existingTestSetID;
                         //get test id's for existing TestSet
                         List<Integer> currentTestSetTestIDs = PractiTestWriter.getTestIDsForTestSetID(this.setID);
-                        //Remove existing test IDs from List to get removed
+                        //Remove existing test IDs from List to get List of removed test cases in Practi test
                         currentTestSetTestIDs.removeAll(testIDs);
-                        //Remove Instance IDs
+                        //Remove Instance IDs which are not present for this set IDs
                         for (Integer currentTestSetTestID : currentTestSetTestIDs) {
                                 PractiTestWriter.removeInstance(PractiTestWriter.getInstancesByTestID(currentTestSetTestID));
                         }
