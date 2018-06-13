@@ -45,7 +45,7 @@ public class TestNGListenerForPractiTest implements ITestListener {
                 //Load configuration file
                 GeneralConfig.loadConfig();
                 //Check if Set ID specified is present in the system
-                String existingTestSetID = PractiTestWriter.getSetID(GeneralConfig.getConfigurationValue("groups"));//System.getProperty("groups"));
+                String existingTestSetID = PractiTestWriter.getSetID(System.getProperty("groups"));
                 //extract all automated tests for current execution
                 List<Integer> testIDs = ExtractTests.extractAllTestIds(context);
                 if (existingTestSetID == null)
