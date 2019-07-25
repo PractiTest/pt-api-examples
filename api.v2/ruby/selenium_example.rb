@@ -12,7 +12,7 @@ all_steps = []
 browser.get "https://www.google.com/ncr"
 all_steps << {name: 'Got to www.google.com', status: 'PASSED'}
 
-browser.find_element(:id, 'lst-ib').send_keys "PractiTest\n"
+browser.find_element(:name, 'q').send_keys "PractiTest\n"
 all_steps << {name: 'Found element :id, and searched for PractiTest', status: 'PASSED'}
 puts "before sleep"
 sleep(1)
