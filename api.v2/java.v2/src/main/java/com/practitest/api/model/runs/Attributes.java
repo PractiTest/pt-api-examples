@@ -12,7 +12,16 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 public class Attributes {
 
     @JsonProperty("instance-id")
-    private int instanceId;
+    private String instanceId;
+
+
+
+    @JsonProperty("automated-execution-output")
+    private String automatedExecutionOutput;
+
+
+    @JsonProperty("exit-code")
+    private int exitcode;
 
     /**
      * No args constructor for use in serialization
@@ -27,19 +36,47 @@ public class Attributes {
      */
 
 
-    public Attributes(int instanceId) {
+    public Attributes(String instanceId, int exitcode) {
         super();
         this.instanceId = instanceId;
+        this.exitcode = exitcode;
+    }
+
+    public Attributes(String instanceId, String automatedExecutionOutput, int exitcode) {
+        super();
+        this.instanceId = instanceId;
+        this.automatedExecutionOutput = automatedExecutionOutput;
+        this.exitcode = exitcode;
     }
 
     @JsonProperty("instance-id")
-    public int getInstanceid() {
+    public String getInstanceid() {
         return instanceId;
     }
 
     @JsonProperty("instance-id")
-    public void setInstanceid(int instanceId) {
+    public void setInstanceid(String instanceId) {
         this.instanceId = instanceId;
+    }
+
+    @JsonProperty("exit-code")
+    public int getExitcode() {
+        return exitcode;
+    }
+
+    @JsonProperty("exit-code")
+    public void setExitcode(int exitcode) {
+        this.exitcode = exitcode;
+    }
+
+    @JsonProperty("automated-execution-output")
+    public String getAutomatedExecutionOutput() {
+        return automatedExecutionOutput;
+    }
+
+    @JsonProperty("automated-execution-output")
+    public void setAutomatedExecutionOutput(String automatedExecutionOutput) {
+        this.automatedExecutionOutput = automatedExecutionOutput;
     }
 
 }
